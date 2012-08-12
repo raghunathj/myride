@@ -6,6 +6,7 @@
 
 body{
 	font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+	overflow: hidden;
 }
 
 #wrap{
@@ -164,4 +165,9 @@ width: 94%;
 
 .datablock p{
 	font-size:20px;
+}
+
+#block3:hover{
+	overflow-y:scroll;
+	overflow-x:hidden;
 }
