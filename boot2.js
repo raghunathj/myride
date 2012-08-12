@@ -109,7 +109,7 @@
         var typeclick = function (event, matchedEl, container) {
             typename = Dom.getAttribute(this,"data-value");
             if((typename === '2')||(typename === '3')){
-                alert("Open Car / Bike");
+                //alert("Open Car / Bike");
                 //Show the fuel slider with animation
                 //YAHOO.util.Dom.setStyle(document.body, 'opacity', '0');
                 /*var ani = new YAHOO.util.Anim('bike-car' , {
