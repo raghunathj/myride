@@ -177,25 +177,37 @@ var submitclick = function (event, matchedEl, container) {
 
              var vh_speed = Math.round(parseFloat(get_speed(distance,vh_time_seconds,'hours'))); 
 
-            /*console.log('cy_time_seconds: '+getSeconds(cy_time_hr,'hours'));
-            console.log('cy_time_seconds: '+getSeconds(cy_time_min,'minutes'));
-            console.log('cy_time_seconds: '+cy_time_seconds);*/
+              var cycle_time_taken_set = '00:00',bike_time_taken_set = '00:00',car_time_taken_set = '00:00';
+
+            
             switch(parseInt(typename))
             {
                 case 1:              
-                        cycle_speed = vh_speed;                       
+                        cycle_speed = vh_speed;     
+                        
+                        //set time in seconds.                        
+                        cycle_time_taken_set = vh_time_seconds;
+                        bike_time_taken_set = parseInt((distance/bike_speed)*3600);
+                        car_time_taken_set = parseInt((distance/car_speed)*3600);
                         break;
                 case 2: 
-                        bike_speed = vh_speed;  
-                        console.log(Dom.get("slider-converted-value2").value);
-                        bike_efficiency = Dom.get("slider-converted-value2").value;      
-                        console.log(bike_efficiency);                
+                        bike_speed = vh_speed;  //console.log(Dom.get("slider-converted-value2").value);
+                        bike_efficiency = Dom.get("slider-converted-value2").value; //console.log(bike_efficiency);                
+                        
+
+                        //set time in seconds.                        
+                        cycle_time_taken_set = parseInt((distance/cycle_speed)*3600);                                
+                        bike_time_taken_set = vh_time_seconds;
+                        car_time_taken_set = parseInt((distance/car_speed)*3600);
                         break;
                 case 3: 
-                        car_speed = vh_speed;
-                        console.log(Dom.get("slider-converted-value2").value);
+                        car_speed = vh_speed;   //console.log(Dom.get("slider-converted-value2").value);
                         car_efficiency = Dom.get("slider-converted-value2").value;   
-                       
+                        
+                        //set time in seconds
+                        cycle_time_taken_set = parseInt((distance/cycle_speed)*3600);
+                        bike_time_taken_set = parseInt((distance/bike_speed)*3600);                        
+                        car_time_taken_set = vh_time_seconds;
                         break;
             }
             
@@ -229,6 +241,15 @@ var submitclick = function (event, matchedEl, container) {
             }  
             //speed module    
 
+            //time module
+
+            console.log('cy: '+cycle_time_taken_set+'bi: '+bike_time_taken_set+' cr:'+car_time_taken_set);    
+            Dom.get("cycle_time_taken").innerHTML = format_time(cycle_time_taken_set);
+            Dom.get("bike_time_taken").innerHTML = format_time(bike_time_taken_set);
+            Dom.get("car_time_taken").innerHTML = format_time(car_time_taken_set);                   
+            //time module
+
+
             //cost module
             bike_fuel_cost = fuelcost(distance,bike_efficiency,petrol);
             car_fuel_cost = fuelcost(distance,car_efficiency,petrol);
@@ -246,7 +267,7 @@ var submitclick = function (event, matchedEl, container) {
             //set colors
             //cost module
 
-
+            
 
             //calorie module starts
             var calorie_burned = calorieburner(distance);//calorieburner(50,vh_time_seconds,'seconds'); //console.log(calorie_burned);
@@ -419,7 +440,33 @@ var submitclick = function (event, matchedEl, container) {
         }
 
         //
+        function fixnan(i)
+        {
+            if(isNaN(i)){
+                    return 0
+            }else{
+                    return i
+            }
+        }
 
+        function format_time(SecondsRequired)
+        {
+                var hours, minutes , secs
+                var remainder;
+                hours = fixnan(parseInt(SecondsRequired / 3600)) ;// ''and chuck ayay remainder
+                remainder = fixnan(parseFloat(formatDecimal(SecondsRequired - (hours * 3600.0),4)));
+                minutes = fixnan(parseInt(remainder / 60.0));
+                secs = remainder - (minutes * 60.0);
+                if( secs<= 0.0001 )secs=0;
+                
+                hours=fixnan(hours);
+                minutes=fixnan(minutes);
+                secs=fixnan(parseFloat(secs));
+                sout = parseInt(hours) + " : " + parseInt(minutes) + " : " + parseInt(secs);
+                
+                return sout;
+        
+        }    
 
     });
 })();
