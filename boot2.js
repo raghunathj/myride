@@ -249,7 +249,7 @@ var submitclick = function (event, matchedEl, container) {
 
 
             //calorie module starts
-            var calorie_burned = calorieburner(50,vh_time_seconds,'seconds'); //console.log(calorie_burned);
+            var calorie_burned = calorieburner(distance);//calorieburner(50,vh_time_seconds,'seconds'); //console.log(calorie_burned);
             Dom.get("cycle_calorie").innerHTML = calorie_burned;
             //calorie module ends
 
@@ -329,7 +329,7 @@ var submitclick = function (event, matchedEl, container) {
 
 
         //calculate calorie
-        function calorieburner(kg,time_data,type)
+        function calorieburner1(kg,time_data,type)
         {
             var hr = time_data;     
             switch(type)
@@ -342,7 +342,13 @@ var submitclick = function (event, matchedEl, container) {
                                break;               
             }
             return Math.round((kg*10)*hr);
-        }    
+        }  
+
+        //calculate calorie
+        function calorieburner(distance)
+        {
+            return Math.round(100*parseInt(distance));
+        }  
 
         function get_speed(metres,seconds,type)
         {
